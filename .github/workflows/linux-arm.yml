@@ -1,0 +1,19 @@
+name: linux arm64
+on: 
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: fastai/workflows/ssh@master
+      with:
+        ssh_key: ${{ secrets.SSH_KEY }}
+        key_file: id_ecdsa
+    - uses: actions/checkout@v2
+    - run: source script-linux.sh
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@master
